@@ -1,0 +1,4067 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>FACEFORGE — استودیو ساخت فیس سه‌بعدی</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+:root{
+  --bg:#07070a;
+  --panel:rgba(255,255,255,.045);
+  --line:rgba(255,255,255,.09);
+  --white:#f7f5ef;
+  --muted:#8c8a91;
+  --gold:#d8b56a;
+  --gold2:#ffe1a0;
+  --purple:#8b5cf6;
+  --green:#55dfaa;
+  --red:#ff6b6b;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:"Vazirmatn",sans-serif;
+  color:white;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3,5,9,.95),
+      rgba(3,5,9,.55),
+      rgba(3,5,9,.25)
+    ),
+    url("./faceforge-bg.jpg") center/cover fixed no-repeat;
+  background-color:#050609;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.035;
+  z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* NAV */
+
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
+  padding:18px 0;
+  background:rgba(7,7,10,.72);
+  backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--line);
+}
+
+.container{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:var(--gold);
+}
+
+.menu{
+  display:flex;
+  gap:30px;
+  color:#aaa7af;
+  font-size:13px;
+}
+
+.menu a{
+  text-decoration:none;
+  color:inherit;
+  transition:.3s;
+}
+
+.menu a:hover{
+  color:white;
+}
+
+.nav-btn{
+  padding:10px 18px;
+  border:1px solid rgba(216,181,106,.3);
+  border-radius:12px;
+  color:var(--gold2);
+  background:rgba(216,181,106,.06);
+  text-decoration:none;
+}
+
+/* HERO */
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  padding-top:100px;
+}
+
+.grid{
+  position:absolute;
+  inset:0;
+  opacity:.10;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:linear-gradient(to bottom,#000,transparent);
+}
+
+.glow{
+  position:absolute;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:.12;
+}
+
+.glow.one{
+  background:var(--purple);
+  right:-180px;
+  top:10%;
+  animation:float 9s infinite ease-in-out;
+}
+
+.glow.two{
+  background:var(--gold);
+  left:-220px;
+  bottom:-100px;
+  animation:float 11s infinite ease-in-out reverse;
+}
+
+@keyframes float{
+  50%{
+    transform:translate(30px,-30px);
+  }
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:800px;
+}
+
+.eyebrow{
+  color:var(--gold);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:22px;
+}
+
+.hero h1{
+  font-size:clamp(48px,7vw,88px);
+  line-height:1.08;
+  letter-spacing:-4px;
+  font-weight:900;
+}
+
+.hero h1 span{
+  background:linear-gradient(110deg,#fff,var(--gold2),#a98aff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:680px;
+  color:#96939c;
+  line-height:2;
+  font-size:17px;
+  margin:25px 0 35px;
+}
+
+.buttons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:15px 25px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:700;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:.35s;
+}
+
+.primary{
+  background:linear-gradient(110deg,#b99148,#f1d38e);
+  color:#17120a;
+  box-shadow:0 15px 45px rgba(216,181,106,.16);
+}
+
+.primary:hover{
+  transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(216,181,106,.3);
+}
+
+.secondary{
+  color:#ddd;
+  background:rgba(255,255,255,.045);
+  border-color:var(--line);
+}
+
+/* FACE */
+
+.face-orb{
+  position:absolute;
+  width:390px;
+  height:520px;
+  left:7%;
+  top:50%;
+  transform:translateY(-50%);
+  border-radius:48% 52% 45% 55%;
+  background:
+    radial-gradient(circle at 50% 25%,rgba(255,255,255,.14),transparent 20%),
+    radial-gradient(circle at 50% 50%,rgba(139,92,246,.28),transparent 42%),
+    linear-gradient(145deg,#16151b,#08080b);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:
+    inset 0 0 80px rgba(139,92,246,.15),
+    0 50px 120px rgba(0,0,0,.7);
+  animation:faceFloat 7s ease-in-out infinite;
+}
+
+.face-orb:before{
+  content:"";
+  position:absolute;
+  width:160px;
+  height:230px;
+  left:115px;
+  top:110px;
+  border-radius:50%;
+  border:1px solid rgba(216,181,106,.25);
+}
+
+.face-orb:after{
+  content:"3D FACE";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  color:rgba(255,255,255,.16);
+  font-size:12px;
+  letter-spacing:7px;
+}
+
+@keyframes faceFloat{
+  50%{
+    transform:translateY(calc(-50% - 18px)) rotate(2deg);
+  }
+}
+
+/* SECTIONS */
+
+section{
+  padding:110px 0;
+}
+
+.section-head{
+  margin-bottom:45px;
+}
+
+.section-head .small{
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:2px;
+  font-weight:700;
+}
+
+.section-head h2{
+  font-size:43px;
+  letter-spacing:-2px;
+  margin-top:12px;
+}
+
+.section-head p{
+  color:var(--muted);
+  margin-top:10px;
+}
+
+/* PROCESS */
+
+.process{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.process-card{
+  min-height:210px;
+  padding:25px;
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.018));
+  transition:.4s;
+}
+
+.process-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(216,181,106,.3);
+}
+
+.number{
+  color:rgba(216,181,106,.55);
+  font-size:12px;
+}
+
+.process-card h3{
+  margin-top:45px;
+  font-size:20px;
+}
+
+.process-card p{
+  color:#77747c;
+  line-height:1.8;
+  font-size:13px;
+  margin-top:8px;
+}
+
+/* ORDER */
+
+.order{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(139,92,246,.08),transparent 45%);
+}
+
+.order-box{
+  border:1px solid var(--line);
+  border-radius:30px;
+  background:rgba(255,255,255,.025);
+  padding:35px;
+  box-shadow:0 40px 100px rgba(0,0,0,.3);
+}
+
+.steps{
+  display:flex;
+  gap:10px;
+  margin-bottom:35px;
+}
+
+.step{
+  flex:1;
+  height:5px;
+  border-radius:20px;
+  background:#222127;
+}
+
+.step.active{
+  background:linear-gradient(90deg,var(--gold),#fff0c5);
+}
+
+/* UPLOAD */
+
+.upload-title{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.upload-description{
+  color:#77747d;
+  font-size:13px;
+  margin-bottom:25px;
+}
+
+.upload-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.upload{
+  min-height:210px;
+  border:1px dashed rgba(255,255,255,.18);
+  border-radius:20px;
+  background:rgba(255,255,255,.025);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:.35s;
+  position:relative;
+  overflow:hidden;
+}
+
+.upload:hover{
+  border-color:var(--gold);
+  background:rgba(216,181,106,.045);
+}
+
+.upload input{
+  display:none;
+}
+
+.upload-icon{
+  width:58px;
+  height:58px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(216,181,106,.25);
+  color:var(--gold2);
+  font-size:25px;
+  margin-bottom:14px;
+}
+
+.upload strong{
+  font-size:14px;
+}
+
+.upload small{
+  color:#66636b;
+  margin-top:5px;
+}
+
+.preview{
+  position:absolute;
+  inset:0;
+  display:none;
+  background:#09090c;
+}
+
+.preview img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.file-name{
+  position:absolute;
+  bottom:8px;
+  right:8px;
+  left:8px;
+  padding:7px;
+  background:rgba(0,0,0,.65);
+  border-radius:8px;
+  font-size:10px;
+  text-align:center;
+}
+
+/* FORM */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin-top:25px;
+}
+
+.input{
+  width:100%;
+  padding:16px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.035);
+  color:white;
+  border-radius:13px;
+  outline:none;
+  font-family:inherit;
+}
+
+.input:focus{
+  border-color:rgba(216,181,106,.5);
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.submit{
+  margin-top:20px;
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(110deg,#b99148,#f0d38d);
+  color:#17120a;
+  font-family:inherit;
+  font-weight:900;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.submit:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+/* PAYMENT */
+
+.payment-section{
+  display:none;
+  margin-top:35px;
+  animation:paymentIn .7s ease;
+}
+
+.payment-section.show{
+  display:block;
+}
+
+@keyframes paymentIn{
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.payment-box{
+  border:1px solid rgba(216,181,106,.22);
+  border-radius:26px;
+  padding:30px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(216,181,106,.09),transparent 35%),
+    rgba(255,255,255,.025);
+}
+
+.payment-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.payment-header h3{
+  font-size:24px;
+}
+
+.payment-secure{
+  color:var(--green);
+  font-size:11px;
+}
+
+.price-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  margin-bottom:20px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(0,0,0,.2);
+}
+
+.price-title{
+  color:#aaa7af;
+  font-size:13px;
+}
+
+.price{
+  color:var(--gold2);
+  font-size:25px;
+  font-weight:900;
+}
+
+.toman{
+  font-size:11px;
+  color:#77747c;
+}
+
+.fake-gateway{
+  border-radius:22px;
+  padding:25px;
+  background:#101116;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.gateway-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.gateway-logo{
+  font-size:20px;
+  font-weight:900;
+}
+
+.gateway-logo span{
+  color:var(--gold);
+}
+
+.gateway-badge{
+  padding:6px 10px;
+  border-radius:8px;
+  font-size:10px;
+  color:#9e9ba3;
+  background:rgba(255,255,255,.05);
+}
+
+.card-number{
+  direction:ltr;
+  text-align:left;
+  letter-spacing:4px;
+}
+
+.card-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+
+.pay-btn{
+  width:100%;
+  margin-top:18px;
+  padding:17px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(110deg,#b99148,#f1d38e);
+  color:#17120a;
+  font-family:inherit;
+  font-weight:900;
+  font-size:15px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.pay-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 35px rgba(216,181,106,.2);
+}
+
+.fake-note{
+  text-align:center;
+  color:#5e5b63;
+  font-size:10px;
+  margin-top:15px;
+}
+
+/* PAYMENT SUCCESS */
+
+.payment-success{
+  display:none;
+  text-align:center;
+  padding:35px 20px;
+  border:1px solid rgba(85,223,170,.2);
+  border-radius:20px;
+  background:rgba(85,223,170,.035);
+}
+
+.payment-success.show{
+  display:block;
+}
+
+.success-icon{
+  width:65px;
+  height:65px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:28px;
+  color:var(--green);
+  border:1px solid rgba(85,223,170,.3);
+}
+
+.payment-success h3{
+  font-size:22px;
+}
+
+.payment-success p{
+  color:#77747d;
+  font-size:13px;
+  margin-top:8px;
+}
+
+/* ORDER CODE */
+
+.order-code-box{
+  margin-top:22px;
+  padding:20px;
+  border:1px solid rgba(216,181,106,.25);
+  border-radius:18px;
+  background:rgba(216,181,106,.045);
+  text-align:center;
+}
+
+.order-code-label{
+  color:#77747d;
+  font-size:11px;
+  margin-bottom:8px;
+}
+
+.order-code{
+  direction:ltr;
+  color:var(--gold2);
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:1px;
+  word-break:break-all;
+}
+
+.order-code-help{
+  color:#66636b;
+  font-size:11px;
+  margin-top:8px;
+  line-height:1.8;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:15px;
+}
+
+.panel{
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:28px;
+  background:rgba(255,255,255,.035);
+}
+
+.panel-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
+
+.live{
+  color:var(--green);
+  font-size:11px;
+}
+
+.order-id{
+  color:#68656d;
+  font-size:11px;
+}
+
+.timeline-item{
+  display:flex;
+  gap:16px;
+  padding:18px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.timeline-item:last-child{
+  border:0;
+}
+
+.dot-status{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#39373d;
+  margin-top:7px;
+  flex-shrink:0;
+}
+
+.done .dot-status{
+  background:var(--green);
+  box-shadow:0 0 14px rgba(85,223,170,.45);
+}
+
+.timeline-item strong{
+  display:block;
+  font-size:14px;
+}
+
+.timeline-item small{
+  color:#67646c;
+  font-size:11px;
+}
+
+/* DELIVERY */
+
+.delivery{
+  text-align:center;
+}
+
+.download-box{
+  padding:35px 20px;
+  border:1px solid rgba(216,181,106,.18);
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(216,181,106,.07),rgba(255,255,255,.02));
+}
+
+.download-icon{
+  font-size:40px;
+  color:var(--gold2);
+  margin-bottom:15px;
+}
+
+.download-box h3{
+  font-size:19px;
+}
+
+.download-box p{
+  color:#6f6c74;
+  font-size:12px;
+  margin:8px 0 20px;
+  line-height:1.9;
+}
+
+.download{
+  display:inline-block;
+  padding:12px 20px;
+  border-radius:11px;
+  background:rgba(216,181,106,.1);
+  border:1px solid rgba(216,181,106,.3);
+  color:var(--gold2);
+  font-size:12px;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.download:hover{
+  background:rgba(216,181,106,.18);
+  transform:translateY(-2px);
+}
+
+#orderLookupInput{
+  text-align:center;
+  direction:ltr;
+  margin-top:5px;
+  margin-bottom:12px;
+}
+
+#checkProjectButton{
+  margin-top:0;
+}
+
+.delivery-ready{
+  border-color:rgba(85,223,170,.3);
+  background:
+    linear-gradient(145deg,rgba(85,223,170,.08),rgba(255,255,255,.02));
+}
+
+.delivery-ready .download-icon{
+  color:var(--green);
+}
+
+.delivery-error{
+  border-color:rgba(255,107,107,.25);
+}
+
+.delivery-pending{
+  border-color:rgba(216,181,106,.25);
+}
+
+.delivery-file-name{
+  display:none;
+  margin:12px 0 5px;
+  color:#aaa7af;
+  font-size:11px;
+  direction:ltr;
+  word-break:break-all;
+}
+
+/* REVIEWS */
+
+.reviews-layout{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:20px;
+}
+
+.review-form{
+  height:max-content;
+}
+
+.review-form h3{
+  font-size:20px;
+  margin-bottom:20px;
+}
+
+.review-form .input{
+  margin-bottom:12px;
+}
+
+.review-mode{
+  color:#77747d;
+  font-size:11px;
+  margin-bottom:15px;
+}
+
+.reviews-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-height:550px;
+  overflow-y:auto;
+  padding-left:5px;
+}
+
+.review-card{
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  background:rgba(255,255,255,.035);
+  transition:.3s;
+}
+
+.review-card:hover{
+  border-color:rgba(216,181,106,.25);
+  transform:translateY(-2px);
+}
+
+.review-card.mine{
+  border-color:rgba(216,181,106,.35);
+  background:rgba(216,181,106,.045);
+}
+
+.review-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+  gap:10px;
+}
+
+.review-name{
+  font-weight:800;
+  color:var(--gold2);
+}
+
+.review-date{
+  font-size:10px;
+  color:#66636b;
+}
+
+.review-text{
+  color:#aaa7af;
+  font-size:13px;
+  line-height:1.9;
+  word-break:break-word;
+}
+
+.review-actions{
+  display:flex;
+  justify-content:flex-start;
+  margin-top:15px;
+}
+
+.edit-review-btn{
+  border:1px solid rgba(216,181,106,.3);
+  background:rgba(216,181,106,.07);
+  color:var(--gold2);
+  padding:8px 13px;
+  border-radius:9px;
+  font-family:inherit;
+  font-size:11px;
+  cursor:pointer;
+}
+
+.edit-review-btn:hover{
+  background:rgba(216,181,106,.14);
+}
+
+.no-reviews{
+  color:#66636b;
+  text-align:center;
+  padding:40px;
+  border:1px dashed var(--line);
+  border-radius:18px;
+}
+
+.review-loading{
+  color:#66636b;
+  text-align:center;
+  padding:30px;
+}
+
+/* CTA */
+
+.final{
+  text-align:center;
+}
+
+.final-box{
+  position:relative;
+  overflow:hidden;
+  padding:90px 25px;
+  border:1px solid var(--line);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at center,rgba(139,92,246,.16),transparent 60%),
+    rgba(255,255,255,.025);
+}
+
+.final-box h2{
+  font-size:clamp(35px,5vw,60px);
+  letter-spacing:-3px;
+}
+
+.final-box p{
+  color:#85818a;
+  margin:15px auto 30px;
+  max-width:600px;
+  line-height:2;
+}
+
+/* FOOTER */
+
+footer{
+  padding:35px 0;
+  border-top:1px solid var(--line);
+  color:#625f66;
+  font-size:11px;
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+}
+
+/* REVEAL */
+
+.reveal{
+  opacity:0;
+  transform:translateY(25px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+  .face-orb{
+    opacity:.22;
+    left:-150px;
+  }
+
+  .process{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .upload-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .reviews-layout{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:600px){
+
+  .menu{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:48px;
+    letter-spacing:-2px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  section{
+    padding:75px 0;
+  }
+
+  .process,
+  .upload-grid,
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .order-box{
+    padding:20px;
+  }
+
+  .footer{
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .price-card{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .review-top{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .order-code{
+    font-size:19px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+
+<nav>
+<div class="container nav">
+
+<a href="#" class="logo">
+FACE<span>FORGE</span>
+</a>
+
+<div class="menu">
+<a href="#process">فرآیند</a>
+<a href="#order">ثبت سفارش</a>
+<a href="#status">سفارش من</a>
+<a href="#reviews">نظرات</a>
+<a href="#delivery">تحویل فایل</a>
+</div>
+
+<a href="#order" class="nav-btn">
+شروع سفارش
+</a>
+
+</div>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="grid"></div>
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<div class="container">
+
+<div class="hero-content">
+
+<div class="eyebrow">
+3D FACE STUDIO / 2026
+</div>
+
+<h1>
+چهره‌ات را<br>
+<span>وارد بازی کن.</span>
+</h1>
+
+<p>
+از چهار عکس ساده، یک فیس سه‌بعدی اختصاصی و
+حرفه‌ای برای کاراکترت ساخته می‌شود.
+تو عکس‌ها را می‌فرستی؛ ما مدل را می‌سازیم،
+پردازش می‌کنیم و فایل نهایی را تحویلت می‌دهیم.
+</p>
+
+<div class="buttons">
+
+<a href="#order" class="btn primary">
+ساخت فیس من ←
+</a>
+
+<a href="#process" class="btn secondary">
+فرآیند کار
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="face-orb"></div>
+
+</section>
+
+
+<!-- PROCESS -->
+
+<section id="process">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<div class="small">
+THE PROCESS
+</div>
+
+<h2>
+از عکس تا فیس سه‌بعدی.
+</h2>
+
+<p>
+چهار مرحله؛ یک خروجی اختصاصی.
+</p>
+
+</div>
+
+
+<div class="process">
+
+<div class="process-card reveal">
+<div class="number">01 / PHOTO</div>
+<h3>ارسال عکس</h3>
+<p>
+چهار نمای مشخص از صورتت را در پنل سفارش آپلود کن.
+</p>
+</div>
+
+<div class="process-card reveal">
+<div class="number">02 / MODEL</div>
+<h3>مدل‌سازی</h3>
+<p>
+تصاویر توسط استودیو بررسی و مدل سه‌بعدی ساخته می‌شود.
+</p>
+</div>
+
+<div class="process-card reveal">
+<div class="number">03 / DETAIL</div>
+<h3>پردازش جزئیات</h3>
+<p>
+فرم صورت، جزئیات و ساختار مدل برای خروجی نهایی تنظیم می‌شود.
+</p>
+</div>
+
+<div class="process-card reveal">
+<div class="number">04 / DELIVERY</div>
+<h3>تحویل فایل</h3>
+<p>
+پس از آماده‌شدن سفارش، فایل‌های نهایی از پنل کاربری دریافت می‌شوند.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ORDER -->
+
+<section class="order" id="order">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<div class="small">
+NEW PROJECT
+</div>
+
+<h2>
+پروژه‌ی خودت را شروع کن.
+</h2>
+
+<p>
+چهار زاویه از صورت را ارسال کن تا فرآیند ساخت آغاز شود.
+</p>
+
+</div>
+
+
+<div class="order-box reveal">
+
+<div class="steps">
+<div class="step active"></div>
+<div class="step active"></div>
+<div class="step"></div>
+<div class="step"></div>
+</div>
+
+
+<h3 class="upload-title">
+چهار نمای صورت
+</h3>
+
+<p class="upload-description">
+برای نتیجه بهتر، عکس‌ها واضح، روبه‌رو و بدون فیلتر باشند.
+</p>
+
+
+<div class="upload-grid">
+
+<label class="upload">
+
+<input type="file" accept="image/*" onchange="previewImage(this)">
+
+<div class="upload-icon">◎</div>
+<strong>نمای روبه‌رو</strong>
+<small>Front View</small>
+
+<div class="preview">
+<img>
+<div class="file-name"></div>
+</div>
+
+</label>
+
+
+<label class="upload">
+
+<input type="file" accept="image/*" onchange="previewImage(this)">
+
+<div class="upload-icon">◐</div>
+<strong>نمای نیم‌رخ چپ</strong>
+<small>Left Side</small>
+
+<div class="preview">
+<img>
+<div class="file-name"></div>
+</div>
+
+</label>
+
+
+<label class="upload">
+
+<input type="file" accept="image/*" onchange="previewImage(this)">
+
+<div class="upload-icon">◑</div>
+<strong>نمای نیم‌رخ راست</strong>
+<small>Right Side</small>
+
+<div class="preview">
+<img>
+<div class="file-name"></div>
+</div>
+
+</label>
+
+
+<label class="upload">
+
+<input type="file" accept="image/*" onchange="previewImage(this)">
+
+<div class="upload-icon">◉</div>
+<strong>نمای سه‌رخ</strong>
+<small>Three Quarter</small>
+
+<div class="preview">
+<img>
+<div class="file-name"></div>
+</div>
+
+</label>
+
+</div>
+
+
+<!-- CUSTOMER INFO -->
+
+<div class="form-grid">
+
+<input
+id="customerName"
+class="input"
+placeholder="نام و نام خانوادگی"
+>
+
+<input
+id="customerPhone"
+class="input"
+placeholder="شماره تماس"
+>
+
+<input
+id="customerEmail"
+class="input"
+placeholder="ایمیل"
+>
+
+<input
+id="customerCity"
+class="input"
+placeholder="شهر"
+>
+
+<textarea
+id="customerDescription"
+class="input full"
+rows="4"
+placeholder="توضیحات پروژه، مدل موردنظر یا درخواست خاص..."
+></textarea>
+
+</div>
+
+
+<button class="submit" onclick="continueToPayment()">
+ادامه و پرداخت →
+</button>
+
+
+<!-- PAYMENT -->
+
+<div class="payment-section" id="paymentSection">
+
+<div class="payment-box">
+
+<div class="payment-header">
+
+<h3>
+پرداخت سفارش
+</h3>
+
+<span class="payment-secure">
+● درگاه امن
+</span>
+
+</div>
+
+
+<div class="price-card">
+
+<div>
+
+<div class="price-title">
+هزینه ساخت فیس سه‌بعدی
+</div>
+
+<div class="price-title">
+پردازش و آماده‌سازی فایل
+</div>
+
+</div>
+
+<div class="price">
+۲۹۹,۰۰۰
+<span class="toman">تومان</span>
+</div>
+
+</div>
+
+
+<!-- FAKE GATEWAY -->
+
+<div class="fake-gateway" id="fakeGateway">
+
+<div class="gateway-top">
+
+<div class="gateway-logo">
+FACE<span>PAY</span>
+</div>
+
+<div class="gateway-badge">
+DEMO PAYMENT
+</div>
+
+</div>
+
+
+<input
+class="input card-number"
+id="fakeCard"
+maxlength="19"
+placeholder="6037 0000 0000 0000"
+>
+
+<div class="card-row">
+
+<input
+class="input"
+id="fakeMonth"
+maxlength="2"
+placeholder="ماه"
+>
+
+<input
+class="input"
+id="fakeYear"
+maxlength="2"
+placeholder="سال"
+>
+
+</div>
+
+
+<div class="card-row">
+
+<input
+class="input"
+id="fakeCvv"
+maxlength="4"
+placeholder="CVV2"
+>
+
+<input
+class="input"
+id="fakePin"
+maxlength="4"
+placeholder="رمز پویا"
+>
+
+</div>
+
+
+<button class="pay-btn" onclick="fakePayment()">
+پرداخت ۲۹۹,۰۰۰ تومان
+</button>
+
+
+<div class="fake-note">
+این یک درگاه نمایشی برای نسخه اولیه سایت است.
+هیچ اطلاعات پرداختی ارسال یا ذخیره نمی‌شود.
+</div>
+
+</div>
+
+
+<!-- SUCCESS -->
+
+<div class="payment-success" id="paymentSuccess">
+
+<div class="success-icon">
+✓
+</div>
+
+<h3>
+پرداخت با موفقیت انجام شد
+</h3>
+
+<p>
+سفارش شما ثبت شد و پروژه وارد مرحله بررسی خواهد شد.
+</p>
+
+
+<!-- REAL ORDER CODE -->
+
+<div
+class="order-code-box"
+id="customerOrderCodeBox"
+style="display:none;"
+>
+
+<div class="order-code-label">
+کد سفارش شما
+</div>
+
+<div
+class="order-code"
+id="customerOrderCode"
+>
+---
+</div>
+
+<div class="order-code-help">
+این کد را نگه دار؛ برای پیگیری سفارش و دریافت فایل نهایی به آن نیاز داری.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- STATUS -->
+
+<section id="status">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<div class="small">
+PROJECT CONTROL
+</div>
+
+<h2>
+پروژه‌ات کجاست؟
+</h2>
+
+<p>
+وضعیت ساخت فیس را مرحله‌به‌مرحله ببین.
+</p>
+
+</div>
+
+
+<div class="dashboard">
+
+
+<div class="panel reveal">
+
+<div class="panel-title">
+
+<strong>
+وضعیت پروژه
+</strong>
+
+<span class="live">
+● LIVE
+</span>
+
+</div>
+
+<div class="order-id" id="projectId">
+کد سفارش را وارد کن
+</div>
+
+
+<div class="timeline">
+
+<div class="timeline-item done">
+<div class="dot-status"></div>
+
+<div>
+<strong>سفارش دریافت شد</strong>
+<small>پروژه با موفقیت ثبت شده است.</small>
+</div>
+</div>
+
+
+<div class="timeline-item" id="paymentStatus">
+<div class="dot-status"></div>
+
+<div>
+<strong>پرداخت</strong>
+<small>در انتظار پرداخت</small>
+</div>
+</div>
+
+
+<div class="timeline-item" id="reviewStatus">
+<div class="dot-status"></div>
+
+<div>
+<strong>بررسی تصاویر</strong>
+<small>پس از پرداخت آغاز می‌شود.</small>
+</div>
+</div>
+
+
+<div class="timeline-item" id="modelStatus">
+<div class="dot-status"></div>
+
+<div>
+<strong>مدل‌سازی سه‌بعدی</strong>
+<small>در انتظار شروع</small>
+</div>
+</div>
+
+
+<div class="timeline-item" id="deliveryTimelineStatus">
+<div class="dot-status"></div>
+
+<div>
+<strong>تحویل فایل</strong>
+<small>هنوز فعال نشده</small>
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- DELIVERY -->
+
+<div class="panel delivery" id="delivery">
+
+<div class="panel-title">
+
+<strong>
+فایل‌های پروژه
+</strong>
+
+<span class="order-id" id="deliveryStatus">
+پیگیری سفارش
+</span>
+
+</div>
+
+
+<div class="download-box" id="downloadBox">
+
+<div class="download-icon" id="deliveryIcon">
+⇩
+</div>
+
+<h3 id="deliveryTitle">
+دریافت فایل نهایی
+</h3>
+
+<p id="deliveryMessage">
+کد سفارش خود را وارد کن تا وضعیت فایل پروژه را بررسی کنیم.
+</p>
+
+
+<input
+id="orderLookupInput"
+class="input"
+placeholder="مثلاً FF-..."
+autocomplete="off"
+>
+
+
+<button
+class="submit"
+onclick="checkProject()"
+id="checkProjectButton"
+>
+بررسی سفارش →
+</button>
+
+
+<div
+id="deliveryFileName"
+class="delivery-file-name"
+>
+</div>
+
+
+<a
+href="#"
+class="download"
+id="projectDownload"
+style="display:none;margin-top:15px;"
+target="_blank"
+download
+>
+دانلود فایل پروژه ↓
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- REVIEWS -->
+
+<section id="reviews">
+
+<div class="container">
+
+<div class="section-head reveal">
+
+<div class="small">
+CUSTOMER REVIEWS
+</div>
+
+<h2>
+نظر مشتری‌ها
+</h2>
+
+<p>
+تجربه‌ات از FACEFORGE را با ما به اشتراک بگذار.
+</p>
+
+</div>
+
+
+<div class="reviews-layout">
+
+
+<!-- REVIEW FORM -->
+
+<div class="review-form panel reveal">
+
+<h3 id="reviewFormTitle">
+نظر خودت را بنویس
+</h3>
+
+<div class="review-mode" id="reviewMode">
+هر کاربر فقط یک نظر می‌تواند ثبت کند.
+</div>
+
+<input
+id="reviewName"
+class="input"
+placeholder="نام شما"
+maxlength="50"
+>
+
+<textarea
+id="reviewText"
+class="input"
+rows="5"
+maxlength="500"
+placeholder="تجربه‌ات از FACEFORGE..."
+></textarea>
+
+<button
+id="reviewSubmitButton"
+class="submit"
+onclick="submitReview()"
+>
+ارسال نظر →
+</button>
+
+</div>
+
+
+<!-- REVIEWS -->
+
+<div
+id="reviewsContainer"
+class="reviews-list"
+>
+
+<div class="review-loading">
+در حال دریافت نظرات...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FINAL CTA -->
+
+<section class="final">
+
+<div class="container">
+
+<div class="final-box reveal">
+
+<div class="eyebrow">
+YOUR FACE. YOUR CHARACTER.
+</div>
+
+<h2>
+چهره‌ای که فقط<br>
+متعلق به توست.
+</h2>
+
+<p>
+پروژه‌ی بعدی می‌تواند از یک عکس شروع شود
+و به یک مدل سه‌بعدی اختصاصی تبدیل شود.
+</p>
+
+<a href="#order" class="btn primary">
+شروع ساخت فیس ←
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div class="container footer">
+
+<div>
+FACEFORGE © 2026
+</div>
+
+<div>
+3D FACE • DIGITAL CHARACTER • CUSTOM MODEL
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+let currentProjectCheck = null;
+
+
+/* =====================================================
+   IMAGE PREVIEW
+===================================================== */
+
+function previewImage(input){
+
+    const file = input.files[0];
+
+    if(!file) return;
+
+    if(file.size > 5 * 1024 * 1024){
+
+        alert(
+            "حجم هر عکس نباید بیشتر از 5 مگابایت باشد."
+        );
+
+        input.value = "";
+
+        return;
+    }
+
+    const upload = input.parentElement;
+
+    const preview =
+        upload.querySelector(".preview");
+
+    const img =
+        preview.querySelector("img");
+
+    const name =
+        preview.querySelector(".file-name");
+
+    img.src =
+        URL.createObjectURL(file);
+
+    name.textContent =
+        file.name;
+
+    preview.style.display =
+        "block";
+}
+
+
+/* =====================================================
+   FILE → BASE64
+===================================================== */
+
+function fileToBase64(file){
+
+    return new Promise(
+        (resolve,reject)=>{
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function(){
+
+                    resolve(
+                        reader.result
+                    );
+
+                };
+
+            reader.onerror =
+                function(){
+
+                    reject(
+                        new Error(
+                            "خطا در خواندن تصویر"
+                        )
+                    );
+
+                };
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CONTINUE TO PAYMENT
+===================================================== */
+
+async function continueToPayment(){
+
+    const inputs =
+        document.querySelectorAll(
+            ".upload input"
+        );
+
+
+    if(inputs.length < 4){
+
+        alert(
+            "خطا: چهار بخش آپلود عکس پیدا نشد."
+        );
+
+        return;
+    }
+
+
+    if(!inputs[0].files[0]){
+
+        alert(
+            "لطفاً عکس نمای روبه‌رو را انتخاب کن."
+        );
+
+        return;
+    }
+
+
+    if(!inputs[1].files[0]){
+
+        alert(
+            "لطفاً عکس نیم‌رخ چپ را انتخاب کن."
+        );
+
+        return;
+    }
+
+
+    if(!inputs[2].files[0]){
+
+        alert(
+            "لطفاً عکس نیم‌رخ راست را انتخاب کن."
+        );
+
+        return;
+    }
+
+
+    if(!inputs[3].files[0]){
+
+        alert(
+            "لطفاً عکس سه‌رخ را انتخاب کن."
+        );
+
+        return;
+    }
+
+
+    const name =
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+
+    const phone =
+        document
+        .getElementById("customerPhone")
+        .value
+        .trim();
+
+
+    const email =
+        document
+        .getElementById("customerEmail")
+        .value
+        .trim();
+
+
+    const city =
+        document
+        .getElementById("customerCity")
+        .value
+        .trim();
+
+
+    const description =
+        document
+        .getElementById("customerDescription")
+        .value
+        .trim();
+
+
+    if(!name || !phone || !email){
+
+        alert(
+            "لطفاً نام، شماره تماس و ایمیل را تکمیل کن."
+        );
+
+        return;
+    }
+
+
+    const submitButton =
+        document.querySelector(
+            ".order-box > .submit"
+        );
+
+
+    const originalText =
+        submitButton.innerText;
+
+
+    submitButton.disabled =
+        true;
+
+    submitButton.innerText =
+        "در حال آپلود عکس‌ها...";
+
+
+    try{
+
+        const front =
+            await fileToBase64(
+                inputs[0].files[0]
+            );
+
+
+        const left =
+            await fileToBase64(
+                inputs[1].files[0]
+            );
+
+
+        const right =
+            await fileToBase64(
+                inputs[2].files[0]
+            );
+
+
+        const threequarter =
+            await fileToBase64(
+                inputs[3].files[0]
+            );
+
+
+        const orderData = {
+
+            name:name,
+
+            phone:phone,
+
+            email:email,
+
+            city:city,
+
+            description:description,
+
+            images:{
+
+                front:front,
+
+                left:left,
+
+                right:right,
+
+                threequarter:
+                    threequarter
+
+            }
+
+        };
+
+
+        const response =
+            await fetch(
+                "/api/order",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(
+                            orderData
+                        )
+
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Server Error: " +
+                response.status
+            );
+
+        }
+
+
+        const result =
+            await response.json();
+
+
+        if(!result.success){
+
+            throw new Error(
+                result.message ||
+                "ثبت سفارش انجام نشد."
+            );
+
+        }
+
+
+        /* =========================================
+           ذخیره سفارش واقعی سرور
+        ========================================= */
+
+        window.currentOrder =
+            result.order;
+
+
+        localStorage.setItem(
+            "faceforge_last_order",
+            result.order.id
+        );
+
+
+        console.log(
+            "FACEFORGE ORDER SAVED:",
+            result.order
+        );
+
+
+        /* =========================================
+           نمایش کد واقعی سفارش
+        ========================================= */
+
+        showRealOrderCode(
+            result.order.id
+        );
+
+
+        /* =========================================
+           نمایش در بخش وضعیت
+        ========================================= */
+
+        const projectId =
+            document.getElementById(
+                "projectId"
+            );
+
+        if(projectId){
+
+            projectId.innerText =
+                "PROJECT #" +
+                result.order.id;
+
+        }
+
+
+        /* =========================================
+           قرار دادن کد در بخش تحویل
+        ========================================= */
+
+        const lookupInput =
+            document.getElementById(
+                "orderLookupInput"
+            );
+
+        if(lookupInput){
+
+            lookupInput.value =
+                result.order.id;
+
+        }
+
+
+        /* =========================================
+           نمایش پرداخت
+        ========================================= */
+
+        const paymentSection =
+            document.getElementById(
+                "paymentSection"
+            );
+
+
+        paymentSection.classList.add(
+            "show"
+        );
+
+
+        paymentSection.scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"start"
+
+        });
+
+
+        document
+        .querySelectorAll(".step")[2]
+        .classList.add("active");
+
+
+    }
+    catch(error){
+
+        console.error(
+            "FACEFORGE ERROR:",
+            error
+        );
+
+
+        alert(
+            "❌ ارسال سفارش انجام نشد.\n\n" +
+            "مطمئن شو server.js در حال اجراست."
+        );
+
+    }
+    finally{
+
+        submitButton.disabled =
+            false;
+
+        submitButton.innerText =
+            originalText;
+
+    }
+
+}
+
+
+/* =====================================================
+   SHOW REAL ORDER CODE
+===================================================== */
+
+function showRealOrderCode(orderId){
+
+    if(!orderId) return;
+
+
+    const code =
+        document.getElementById(
+            "customerOrderCode"
+        );
+
+
+    const box =
+        document.getElementById(
+            "customerOrderCodeBox"
+        );
+
+
+    if(code){
+
+        code.innerText =
+            orderId;
+
+    }
+
+
+    if(box){
+
+        box.style.display =
+            "block";
+
+    }
+
+
+    const projectId =
+        document.getElementById(
+            "projectId"
+        );
+
+
+    if(projectId){
+
+        projectId.innerText =
+            "PROJECT #" +
+            orderId;
+
+    }
+
+
+    const lookupInput =
+        document.getElementById(
+            "orderLookupInput"
+        );
+
+
+    if(lookupInput){
+
+        lookupInput.value =
+            orderId;
+
+    }
+
+
+    localStorage.setItem(
+        "faceforge_last_order",
+        orderId
+    );
+
+}
+
+
+/* =====================================================
+   FAKE PAYMENT
+===================================================== */
+
+function fakePayment(){
+
+    const card =
+        document
+        .getElementById("fakeCard")
+        .value
+        .replace(/\D/g,"");
+
+
+    const month =
+        document
+        .getElementById("fakeMonth")
+        .value
+        .trim();
+
+
+    const year =
+        document
+        .getElementById("fakeYear")
+        .value
+        .trim();
+
+
+    const cvv =
+        document
+        .getElementById("fakeCvv")
+        .value
+        .trim();
+
+
+    const pin =
+        document
+        .getElementById("fakePin")
+        .value
+        .trim();
+
+
+    if(
+
+        card.length < 16 ||
+
+        month.length < 2 ||
+
+        year.length < 2 ||
+
+        cvv.length < 3 ||
+
+        pin.length < 4
+
+    ){
+
+        alert(
+            "برای نسخه نمایشی، اطلاعات درگاه را کامل وارد کن."
+        );
+
+        return;
+    }
+
+
+    const button =
+        document.querySelector(
+            ".pay-btn"
+        );
+
+
+    button.innerText =
+        "در حال پردازش...";
+
+    button.disabled =
+        true;
+
+
+    setTimeout(()=>{
+
+        document
+        .getElementById("fakeGateway")
+        .style.display = "none";
+
+
+        document
+        .getElementById("paymentSuccess")
+        .classList.add("show");
+
+
+        const status =
+            document.getElementById(
+                "paymentStatus"
+            );
+
+
+        status.classList.add(
+            "done"
+        );
+
+
+        status
+        .querySelector("small")
+        .innerText =
+            "پرداخت با موفقیت انجام شد.";
+
+
+        /* =========================================
+           استفاده از Order ID واقعی
+        ========================================= */
+
+        if(window.currentOrder){
+
+            showRealOrderCode(
+                window.currentOrder.id
+            );
+
+        }
+
+
+        document
+        .querySelectorAll(".step")[2]
+        .classList.add("active");
+
+
+        button.innerText =
+            "پرداخت انجام شد";
+
+
+        /* رفتن به بخش وضعیت */
+
+        setTimeout(()=>{
+
+            document
+            .getElementById("status")
+            .scrollIntoView({
+
+                behavior:"smooth",
+
+                block:"start"
+
+            });
+
+        },500);
+
+
+    },1800);
+
+}
+
+
+/* =====================================================
+   DELIVERY UI
+===================================================== */
+
+function setDeliveryState(
+    titleText,
+    messageText,
+    mode
+){
+
+    const title =
+        document.getElementById(
+            "deliveryTitle"
+        );
+
+    const message =
+        document.getElementById(
+            "deliveryMessage"
+        );
+
+    const status =
+        document.getElementById(
+            "deliveryStatus"
+        );
+
+    const download =
+        document.getElementById(
+            "projectDownload"
+        );
+
+    const downloadBox =
+        document.getElementById(
+            "downloadBox"
+        );
+
+    const fileName =
+        document.getElementById(
+            "deliveryFileName"
+        );
+
+
+    if(title){
+
+        title.innerText =
+            titleText;
+
+    }
+
+
+    if(message){
+
+        message.innerText =
+            messageText;
+
+    }
+
+
+    if(download){
+
+        download.style.display =
+            "none";
+
+        download.removeAttribute(
+            "href"
+        );
+
+    }
+
+
+    if(fileName){
+
+        fileName.style.display =
+            "none";
+
+        fileName.innerText =
+            "";
+
+    }
+
+
+    if(downloadBox){
+
+        downloadBox.classList.remove(
+            "delivery-ready",
+            "delivery-error",
+            "delivery-pending"
+        );
+
+
+        if(mode === "ready"){
+
+            downloadBox.classList.add(
+                "delivery-ready"
+            );
+
+        }
+
+
+        if(mode === "error"){
+
+            downloadBox.classList.add(
+                "delivery-error"
+            );
+
+        }
+
+
+        if(mode === "pending"){
+
+            downloadBox.classList.add(
+                "delivery-pending"
+            );
+
+        }
+
+    }
+
+
+    if(status){
+
+        if(mode === "ready"){
+
+            status.innerText =
+                "READY";
+
+        }
+        else if(mode === "error"){
+
+            status.innerText =
+                "ERROR";
+
+        }
+        else{
+
+            status.innerText =
+                "در حال ساخت";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   PROJECT STATUS / DOWNLOAD
+===================================================== */
+
+async function checkProject(
+    orderIdFromArgument = null
+){
+
+    const input =
+        document.getElementById(
+            "orderLookupInput"
+        );
+
+
+    const button =
+        document.getElementById(
+            "checkProjectButton"
+        );
+
+
+    const orderId =
+        (
+            orderIdFromArgument ||
+            (input ? input.value : "")
+        )
+        .trim();
+
+
+    if(!orderId){
+
+        setDeliveryState(
+            "کد سفارش وارد نشده",
+            "لطفاً کد سفارش خود را وارد کن.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(input){
+
+        input.value =
+            orderId;
+
+    }
+
+
+    localStorage.setItem(
+        "faceforge_last_order",
+        orderId
+    );
+
+
+    if(button){
+
+        button.disabled =
+            true;
+
+        button.innerText =
+            "در حال بررسی...";
+
+    }
+
+
+    setDeliveryState(
+        "در حال بررسی سفارش...",
+        "در حال دریافت آخرین وضعیت پروژه از سرور.",
+        "pending"
+    );
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/project/" +
+                encodeURIComponent(orderId),
+                {
+                    cache:"no-store"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success ||
+            !data.order
+        ){
+
+            throw new Error(
+                data.message ||
+                "سفارش پیدا نشد."
+            );
+
+        }
+
+
+        const order =
+            data.order;
+
+
+        /* =========================================
+           نمایش Order ID
+        ========================================= */
+
+        const projectId =
+            document.getElementById(
+                "projectId"
+            );
+
+
+        if(projectId){
+
+            projectId.innerText =
+                "PROJECT #" +
+                order.id;
+
+        }
+
+
+        /* =========================================
+           اگر فایل وجود داشته باشد
+        ========================================= */
+
+        if(
+            order.projectFile &&
+            order.projectFile.url
+        ){
+
+            const fileName =
+                order.projectFile.filename ||
+                "FACEFORGE-PROJECT";
+
+
+            setDeliveryState(
+
+                "فایل پروژه آماده است ✓",
+
+                "پروژه شما آماده شده و می‌توانید فایل نهایی را دریافت کنید.",
+
+                "ready"
+
+            );
+
+
+            const fileNameElement =
+                document.getElementById(
+                    "deliveryFileName"
+                );
+
+
+            if(fileNameElement){
+
+                fileNameElement.innerText =
+                    "FILE: " +
+                    fileName;
+
+                fileNameElement.style.display =
+                    "block";
+
+            }
+
+
+            const download =
+                document.getElementById(
+                    "projectDownload"
+                );
+
+
+            if(download){
+
+                download.href =
+                    order.projectFile.url;
+
+                download.download =
+                    fileName;
+
+                download.style.display =
+                    "inline-block";
+
+            }
+
+
+            updateProjectTimeline(
+                order.status
+            );
+
+
+            localStorage.setItem(
+                "faceforge_last_order",
+                order.id
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================================
+           فایل هنوز آماده نیست
+        ========================================= */
+
+        let statusMessage =
+            "سفارش شما ثبت شده، اما فایل نهایی هنوز آماده نشده است.";
+
+
+        if(order.status === "processing"){
+
+            statusMessage =
+                "پروژه شما در حال ساخت و مدل‌سازی است.";
+
+        }
+
+
+        if(order.status === "new"){
+
+            statusMessage =
+                "سفارش شما ثبت شده و در صف بررسی است.";
+
+        }
+
+
+        if(order.status === "completed"){
+
+            statusMessage =
+                "پروژه تکمیل شده، اما فایل نهایی هنوز در سیستم ثبت نشده است.";
+
+        }
+
+
+        setDeliveryState(
+
+            "فایل هنوز آماده نیست",
+
+            statusMessage,
+
+            "pending"
+
+        );
+
+
+        updateProjectTimeline(
+            order.status
+        );
+
+
+        localStorage.setItem(
+            "faceforge_last_order",
+            order.id
+        );
+
+
+    }
+    catch(error){
+
+        console.error(
+            "PROJECT CHECK ERROR:",
+            error
+        );
+
+
+        setDeliveryState(
+
+            "سفارش پیدا نشد",
+
+            "کد سفارش واردشده صحیح نیست یا server.js در دسترس نیست.",
+
+            "error"
+
+        );
+
+    }
+    finally{
+
+        if(button){
+
+            button.disabled =
+                false;
+
+            button.innerText =
+                "بررسی سفارش →";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE PROJECT TIMELINE
+===================================================== */
+
+function updateProjectTimeline(
+    orderStatus
+){
+
+    const paymentStatus =
+        document.getElementById(
+            "paymentStatus"
+        );
+
+
+    const reviewStatus =
+        document.getElementById(
+            "reviewStatus"
+        );
+
+
+    const modelStatus =
+        document.getElementById(
+            "modelStatus"
+        );
+
+
+    const deliveryStatus =
+        document.getElementById(
+            "deliveryTimelineStatus"
+        );
+
+
+    if(
+        !paymentStatus ||
+        !reviewStatus ||
+        !modelStatus ||
+        !deliveryStatus
+    ){
+
+        return;
+
+    }
+
+
+    /* ابتدا وضعیت مراحل بعدی را پاک می‌کنیم */
+
+    reviewStatus.classList.remove(
+        "done"
+    );
+
+    modelStatus.classList.remove(
+        "done"
+    );
+
+    deliveryStatus.classList.remove(
+        "done"
+    );
+
+
+    /* =========================================
+       NEW
+    ========================================= */
+
+    if(orderStatus === "new"){
+
+        paymentStatus
+        .querySelector("small")
+        .innerText =
+            "در انتظار تکمیل فرآیند پرداخت.";
+
+        return;
+
+    }
+
+
+    /* =========================================
+       PROCESSING
+    ========================================= */
+
+    if(orderStatus === "processing"){
+
+        paymentStatus.classList.add(
+            "done"
+        );
+
+        paymentStatus
+        .querySelector("small")
+        .innerText =
+            "پرداخت انجام شده است.";
+
+
+        reviewStatus.classList.add(
+            "done"
+        );
+
+        reviewStatus
+        .querySelector("small")
+        .innerText =
+            "تصاویر در حال بررسی هستند.";
+
+
+        modelStatus
+        .querySelector("small")
+        .innerText =
+            "مدل‌سازی سه‌بعدی در حال انجام است.";
+
+
+        deliveryStatus
+        .querySelector("small")
+        .innerText =
+            "پس از تکمیل مدل فعال می‌شود.";
+
+        return;
+
+    }
+
+
+    /* =========================================
+       READY
+    ========================================= */
+
+    if(orderStatus === "ready"){
+
+        paymentStatus.classList.add(
+            "done"
+        );
+
+        paymentStatus
+        .querySelector("small")
+        .innerText =
+            "پرداخت انجام شده است.";
+
+
+        reviewStatus.classList.add(
+            "done"
+        );
+
+        reviewStatus
+        .querySelector("small")
+        .innerText =
+            "تصاویر بررسی شده‌اند.";
+
+
+        modelStatus.classList.add(
+            "done"
+        );
+
+        modelStatus
+        .querySelector("small")
+        .innerText =
+            "مدل سه‌بعدی ساخته شده است.";
+
+
+        deliveryStatus.classList.add(
+            "done"
+        );
+
+        deliveryStatus
+        .querySelector("small")
+        .innerText =
+            "فایل نهایی آماده دریافت است.";
+
+
+        return;
+
+    }
+
+
+    /* =========================================
+       COMPLETED
+    ========================================= */
+
+    if(orderStatus === "completed"){
+
+        paymentStatus.classList.add(
+            "done"
+        );
+
+        reviewStatus.classList.add(
+            "done"
+        );
+
+        modelStatus.classList.add(
+            "done"
+        );
+
+        deliveryStatus.classList.add(
+            "done"
+        );
+
+
+        paymentStatus
+        .querySelector("small")
+        .innerText =
+            "پرداخت انجام شده است.";
+
+
+        reviewStatus
+        .querySelector("small")
+        .innerText =
+            "بررسی تصاویر انجام شده است.";
+
+
+        modelStatus
+        .querySelector("small")
+        .innerText =
+            "مدل‌سازی سه‌بعدی انجام شده است.";
+
+
+        deliveryStatus
+        .querySelector("small")
+        .innerText =
+            "پروژه تکمیل شده است.";
+
+    }
+
+}
+
+
+/* =====================================================
+   AUTO LOAD LAST ORDER
+===================================================== */
+
+const lastOrder =
+    localStorage.getItem(
+        "faceforge_last_order"
+    );
+
+
+if(lastOrder){
+
+    const lookupInput =
+        document.getElementById(
+            "orderLookupInput"
+        );
+
+
+    if(lookupInput){
+
+        lookupInput.value =
+            lastOrder;
+
+    }
+
+
+    const projectId =
+        document.getElementById(
+            "projectId"
+        );
+
+
+    if(projectId){
+
+        projectId.innerText =
+            "PROJECT #" +
+            lastOrder;
+
+    }
+
+}
+
+
+/* =====================================================
+   REVIEW CLIENT ID
+===================================================== */
+
+function getClientId(){
+
+    let clientId =
+        localStorage.getItem(
+            "faceforge_client_id"
+        );
+
+
+    if(!clientId){
+
+        clientId =
+            "CLIENT-" +
+            Date.now() +
+            "-" +
+            Math.random()
+            .toString(36)
+            .substring(2,12);
+
+
+        localStorage.setItem(
+            "faceforge_client_id",
+            clientId
+        );
+
+    }
+
+
+    return clientId;
+
+}
+
+
+const myClientId =
+    getClientId();
+
+
+let myReview = null;
+
+let editingReview = false;
+
+
+/* =====================================================
+   LOAD REVIEWS
+===================================================== */
+
+async function loadReviews(){
+
+    const container =
+        document.getElementById(
+            "reviewsContainer"
+        );
+
+
+    if(!container) return;
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/reviews",
+                {
+                    cache:"no-store"
+                }
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            throw new Error(
+                "Reviews error"
+            );
+
+        }
+
+
+        const reviews =
+            data.reviews || [];
+
+
+        myReview =
+            reviews.find(
+                review =>
+                    review.clientId ===
+                    myClientId
+            ) || null;
+
+
+        updateReviewForm();
+
+
+        if(reviews.length === 0){
+
+            container.innerHTML = `
+
+                <div class="no-reviews">
+
+                    هنوز نظری ثبت نشده است.
+
+                    <br>
+
+                    اولین نفری باش که نظر می‌دهد.
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            reviews.map(
+                review => {
+
+                    const date =
+                        new Date(
+                            review.createdAt
+                        ).toLocaleDateString(
+                            "fa-IR"
+                        );
+
+
+                    const updated =
+                        review.updatedAt
+                        ? " • ویرایش شده"
+                        : "";
+
+
+                    const isMine =
+                        review.clientId ===
+                        myClientId;
+
+
+                    return `
+
+                        <div class="review-card ${isMine ? "mine" : ""}">
+
+                            <div class="review-top">
+
+                                <span class="review-name">
+
+                                    ${escapeHTML(
+                                        review.name
+                                    )}
+
+                                    ${
+                                        isMine
+                                        ? " · نظر من"
+                                        : ""
+                                    }
+
+                                </span>
+
+                                <span class="review-date">
+
+                                    ${date}
+                                    ${updated}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="review-text">
+
+                                ${escapeHTML(
+                                    review.text
+                                )}
+
+                            </div>
+
+
+                            ${
+                                isMine
+                                ?
+
+                                `
+
+                                <div class="review-actions">
+
+                                    <button
+                                        class="edit-review-btn"
+                                        onclick="startEditReview()"
+                                    >
+                                        ویرایش نظر من
+                                    </button>
+
+                                </div>
+
+                                `
+
+                                : ""
+
+                            }
+
+                        </div>
+
+                    `;
+
+                }
+            ).join("");
+
+
+    }
+    catch(error){
+
+        console.error(
+            "REVIEWS ERROR:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="no-reviews">
+
+                دریافت نظرات با خطا مواجه شد.
+
+                <br>
+
+                مطمئن شو server.js در حال اجراست.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE REVIEW FORM
+===================================================== */
+
+function updateReviewForm(){
+
+    const title =
+        document.getElementById(
+            "reviewFormTitle"
+        );
+
+
+    const mode =
+        document.getElementById(
+            "reviewMode"
+        );
+
+
+    const button =
+        document.getElementById(
+            "reviewSubmitButton"
+        );
+
+
+    const nameInput =
+        document.getElementById(
+            "reviewName"
+        );
+
+
+    const textInput =
+        document.getElementById(
+            "reviewText"
+        );
+
+
+    if(!title || !mode || !button)
+        return;
+
+
+    if(myReview && !editingReview){
+
+        title.innerText =
+            "نظر شما ثبت شده است";
+
+
+        mode.innerText =
+            "شما قبلاً نظر داده‌اید. می‌توانید آن را ویرایش کنید.";
+
+
+        button.innerText =
+            "ویرایش نظر من →";
+
+
+        nameInput.value =
+            myReview.name;
+
+
+        textInput.value =
+            myReview.text;
+
+
+        nameInput.disabled =
+            true;
+
+
+        textInput.disabled =
+            true;
+
+    }
+    else if(myReview && editingReview){
+
+        title.innerText =
+            "ویرایش نظر";
+
+
+        mode.innerText =
+            "نظر خودت را تغییر بده و ذخیره کن.";
+
+
+        button.innerText =
+            "ذخیره تغییرات →";
+
+
+        nameInput.value =
+            myReview.name;
+
+
+        textInput.value =
+            myReview.text;
+
+
+        nameInput.disabled =
+            false;
+
+
+        textInput.disabled =
+            false;
+
+    }
+    else{
+
+        title.innerText =
+            "نظر خودت را بنویس";
+
+
+        mode.innerText =
+            "هر کاربر فقط یک نظر می‌تواند ثبت کند.";
+
+
+        button.innerText =
+            "ارسال نظر →";
+
+
+        nameInput.value =
+            "";
+
+
+        textInput.value =
+            "";
+
+
+        nameInput.disabled =
+            false;
+
+
+        textInput.disabled =
+            false;
+
+    }
+
+}
+
+
+/* =====================================================
+   START EDIT REVIEW
+===================================================== */
+
+function startEditReview(){
+
+    if(!myReview){
+
+        alert(
+            "نظر شما پیدا نشد."
+        );
+
+        return;
+
+    }
+
+
+    editingReview =
+        true;
+
+
+    updateReviewForm();
+
+
+    document
+    .getElementById("reviewFormTitle")
+    .scrollIntoView({
+
+        behavior:"smooth",
+
+        block:"center"
+
+    });
+
+
+    document
+    .getElementById("reviewText")
+    .focus();
+
+}
+
+
+/* =====================================================
+   SUBMIT / UPDATE REVIEW
+===================================================== */
+
+async function submitReview(){
+
+    const nameInput =
+        document.getElementById(
+            "reviewName"
+        );
+
+
+    const textInput =
+        document.getElementById(
+            "reviewText"
+        );
+
+
+    const button =
+        document.getElementById(
+            "reviewSubmitButton"
+        );
+
+
+    if(myReview && !editingReview){
+
+        startEditReview();
+
+        return;
+
+    }
+
+
+    const name =
+        nameInput.value.trim();
+
+
+    const text =
+        textInput.value.trim();
+
+
+    if(!name){
+
+        alert(
+            "لطفاً نام خود را وارد کن."
+        );
+
+        return;
+    }
+
+
+    if(!text){
+
+        alert(
+            "لطفاً متن نظر را وارد کن."
+        );
+
+        return;
+    }
+
+
+    button.disabled =
+        true;
+
+
+    button.innerText =
+        editingReview
+        ? "در حال ذخیره..."
+        : "در حال ارسال...";
+
+
+    try{
+
+        let response;
+
+
+        /* ویرایش */
+
+        if(
+            editingReview &&
+            myReview
+        ){
+
+            response =
+                await fetch(
+                    "/api/reviews/" +
+                    encodeURIComponent(
+                        myReview.id
+                    ),
+                    {
+
+                        method:"PUT",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                name:name,
+
+                                text:text,
+
+                                clientId:
+                                    myClientId
+
+                            })
+
+                    }
+                );
+
+        }
+
+
+        /* ثبت جدید */
+
+        else{
+
+            response =
+                await fetch(
+                    "/api/reviews",
+                    {
+
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                name:name,
+
+                                text:text,
+
+                                clientId:
+                                    myClientId
+
+                            })
+
+                    }
+                );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "عملیات انجام نشد."
+            );
+
+        }
+
+
+        if(editingReview){
+
+            alert(
+                "✅ نظر شما با موفقیت ویرایش شد."
+            );
+
+        }
+        else{
+
+            alert(
+                "✅ نظر شما با موفقیت ثبت شد."
+            );
+
+        }
+
+
+        editingReview =
+            false;
+
+
+        myReview =
+            data.review;
+
+
+        await loadReviews();
+
+
+    }
+    catch(error){
+
+        console.error(
+            "REVIEW ERROR:",
+            error
+        );
+
+
+        if(
+            error.message ===
+            "شما قبلاً نظر ثبت کرده‌اید."
+        ){
+
+            alert(
+                "⚠️ شما قبلاً یک نظر ثبت کرده‌اید."
+            );
+
+            await loadReviews();
+
+        }
+        else{
+
+            alert(
+                "❌ عملیات انجام نشد.\n\n" +
+                error.message
+            );
+
+        }
+
+    }
+    finally{
+
+        button.disabled =
+            false;
+
+
+        updateReviewForm();
+
+    }
+
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function escapeHTML(text){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   LOAD REVIEWS ON START
+===================================================== */
+
+loadReviews();
+
+
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+
+const observer =
+    new IntersectionObserver(
+
+        (entries)=>{
+
+            entries.forEach(
+                entry=>{
+
+                    if(
+                        entry.isIntersecting
+                    ){
+
+                        entry.target
+                        .classList
+                        .add("show");
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(
+    el =>
+    observer.observe(el)
+);
+
+
+/* =====================================================
+   CARD NUMBER FORMAT
+===================================================== */
+
+const cardInput =
+    document.getElementById(
+        "fakeCard"
+    );
+
+
+if(cardInput){
+
+    cardInput.addEventListener(
+        "input",
+        function(){
+
+            let value =
+                this.value
+                .replace(/\D/g,"")
+                .substring(0,16);
+
+
+            const groups =
+                value.match(
+                    /.{1,4}/g
+                );
+
+
+            this.value =
+                groups
+                ? groups.join(" ")
+                : "";
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   AUTO CHECK LAST ORDER
+===================================================== */
+
+if(lastOrder){
+
+    setTimeout(()=>{
+
+        checkProject(
+            lastOrder
+        );
+
+    },800);
+
+}
+
+</script>
+
+</body>
+</html>
