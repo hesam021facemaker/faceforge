@@ -370,7 +370,20 @@ const server =
         (req, res) => {
 
             /* OPTIONS */
+/* RENDER HEALTH CHECK */
 
+if (
+    req.method === "GET" &&
+    req.url === "/health"
+) {
+    res.writeHead(200, {
+        "Content-Type": "text/plain; charset=utf-8"
+    });
+
+    res.end("OK");
+
+    return;
+}
             if (
                 req.method === "OPTIONS"
             ) {
@@ -1285,7 +1298,7 @@ const server =
 ===================================================== */
 
 server.listen(
-    PORT, "0.0.0.0", 
+    PORT, "0.0.0.0",
     () => {
 
         console.log("");
